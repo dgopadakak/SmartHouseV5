@@ -1,13 +1,16 @@
 package com.dgopadakak.smarthousev5.ui
 
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -27,6 +30,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dgopadakak.smarthousev5.R
+import com.dgopadakak.smarthousev5.model.states.CanopyState
+import com.dgopadakak.smarthousev5.model.states.DishwasherState
 import com.dgopadakak.smarthousev5.model.states.WaterTankState
 import com.dgopadakak.smarthousev5.ui.theme.LightBlue
 
@@ -37,14 +42,67 @@ fun MainScreen() {
         mutableIntStateOf(0)
     }
     val waterTankState = remember {
-        mutableStateOf(WaterTankState(
-            percent = 65,
-            mode = 0,
-            time = 17,
-            isPumpOn = true
-        ))
+        mutableStateOf(
+            WaterTankState(
+                ready = true,
+                percent = 65,
+                mode = 0,
+                time = 17,
+                isPumpOn = true
+            )
+        )
     }
-    WaterTankCard(pinned = pinned, waterTankState = waterTankState)
+    val canopyState = remember {
+        mutableStateOf(
+            CanopyState(
+                ready = true,
+                name1 = "a", name2 = "bb",
+                name3 = "ccc", name4 = "dddd",
+                name5 = "eeeee", name6 = "ffffff",
+                name7 = "ggggggg",
+                isOn1 = true, isOn2 = false,
+                isOn3 = false, isOn4 = false,
+                isOn5 = true, isOn6 = true,
+                isOn7 = false
+            )
+        )
+    }
+    val dishwasherState = remember {
+        mutableStateOf(
+            DishwasherState(
+                ready = true,
+                idk = 4
+            )
+        )
+    }
+
+    Column {
+        when (pinned.intValue) {
+            0 -> WaterTankCard(pinned = pinned, waterTankState = waterTankState)
+            1 -> CanopyCard(pinned = pinned, canopyState = canopyState)
+            2 -> DishwasherCard(pinned = pinned, dishwasherState = dishwasherState)
+        }
+    }
+    Row(
+        modifier = Modifier
+            .padding(top = 15.dp)
+            .horizontalScroll(rememberScrollState())
+    ) {
+        when (pinned.intValue) {
+            0 -> {
+                CanopyCard(pinned = pinned, canopyState = canopyState)
+                DishwasherCard(pinned = pinned, dishwasherState = dishwasherState)
+            }
+            1 -> {
+                WaterTankCard(pinned = pinned, waterTankState = waterTankState)
+                DishwasherCard(pinned = pinned, dishwasherState = dishwasherState)
+            }
+            2 -> {
+                WaterTankCard(pinned = pinned, waterTankState = waterTankState)
+                CanopyCard(pinned = pinned, canopyState = canopyState)
+            }
+        }
+    }
 }
 
 @Composable
@@ -59,7 +117,9 @@ fun WaterTankCard(
             modifier = if (pinned.value == 0)
                 Modifier.fillMaxWidth()
             else
-                Modifier.width(300.dp)
+                Modifier
+                    .width(300.dp)
+                    .height(140.dp)
         ) {
             Row(
                 horizontalArrangement = if (pinned.value == 0)
@@ -160,7 +220,9 @@ fun WaterTankCard(
                 }
                 Switch(
                     checked = waterTankState.value.isPumpOn,
-                    onCheckedChange = { /*TODO*/ },
+                    onCheckedChange = {
+                        /*TODO*/
+                    },
                     modifier = if (pinned.value == 0)
                         Modifier.padding(start = 15.dp)
                     else
@@ -171,14 +233,18 @@ fun WaterTankCard(
     }
 }
 
-@Preview
 @Composable
-fun CanopyCard() {
+fun CanopyCard(
+    pinned: MutableState<Int>,
+    canopyState: MutableState<CanopyState>
+) {
 
 }
 
-@Preview
 @Composable
-fun DishwasherCard() {
+fun DishwasherCard(
+    pinned: MutableState<Int>,
+    dishwasherState: MutableState<DishwasherState>
+) {
 
 }
