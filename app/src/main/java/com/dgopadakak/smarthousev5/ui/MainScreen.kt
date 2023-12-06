@@ -82,24 +82,26 @@ fun MainScreen() {
             1 -> CanopyCard(pinned = pinned, canopyState = canopyState)
             2 -> DishwasherCard(pinned = pinned, dishwasherState = dishwasherState)
         }
-    }
-    Row(
-        modifier = Modifier
-            .padding(top = 15.dp)
-            .horizontalScroll(rememberScrollState())
-    ) {
-        when (pinned.intValue) {
-            0 -> {
-                CanopyCard(pinned = pinned, canopyState = canopyState)
-                DishwasherCard(pinned = pinned, dishwasherState = dishwasherState)
-            }
-            1 -> {
-                WaterTankCard(pinned = pinned, waterTankState = waterTankState)
-                DishwasherCard(pinned = pinned, dishwasherState = dishwasherState)
-            }
-            2 -> {
-                WaterTankCard(pinned = pinned, waterTankState = waterTankState)
-                CanopyCard(pinned = pinned, canopyState = canopyState)
+        Row(
+            modifier = Modifier
+                .padding(top = 15.dp)
+                .horizontalScroll(rememberScrollState())
+        ) {
+            when (pinned.intValue) {
+                0 -> {
+                    CanopyCard(pinned = pinned, canopyState = canopyState)
+                    DishwasherCard(pinned = pinned, dishwasherState = dishwasherState)
+                }
+
+                1 -> {
+                    WaterTankCard(pinned = pinned, waterTankState = waterTankState)
+                    DishwasherCard(pinned = pinned, dishwasherState = dishwasherState)
+                }
+
+                2 -> {
+                    WaterTankCard(pinned = pinned, waterTankState = waterTankState)
+                    CanopyCard(pinned = pinned, canopyState = canopyState)
+                }
             }
         }
     }
@@ -238,7 +240,11 @@ fun CanopyCard(
     pinned: MutableState<Int>,
     canopyState: MutableState<CanopyState>
 ) {
+    Card(
+        modifier = Modifier.padding(10.dp)
+    ) {
 
+    }
 }
 
 @Composable
@@ -246,5 +252,9 @@ fun DishwasherCard(
     pinned: MutableState<Int>,
     dishwasherState: MutableState<DishwasherState>
 ) {
+    Card(
+        modifier = Modifier.padding(10.dp)
+    ) {
 
+    }
 }
