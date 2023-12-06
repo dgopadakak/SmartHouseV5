@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -20,9 +22,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.dgopadakak.smarthousev5.R
 import com.dgopadakak.smarthousev5.model.states.WaterTankState
 import com.dgopadakak.smarthousev5.ui.theme.LightBlue
 
@@ -58,6 +62,10 @@ fun WaterTankCard(
                 Modifier.width(300.dp)
         ) {
             Row(
+                horizontalArrangement = if (pinned.value == 0)
+                    Arrangement.Start
+                else
+                    Arrangement.SpaceBetween,
                 modifier = if (pinned.value == 0)
                     Modifier.fillMaxWidth()
                 else
@@ -99,6 +107,14 @@ fun WaterTankCard(
                     else
                         Modifier.padding(top = 19.dp)
                 )
+                if (pinned.value != 0) {
+                    IconButton(onClick = { /*TODO*/ }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_add_circle_outline_24),
+                            contentDescription = "Add button"
+                        )
+                    }
+                }
             }
 
             Row(
@@ -121,6 +137,7 @@ fun WaterTankCard(
                     )
                 }
             }
+
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(bottom = 10.dp)
