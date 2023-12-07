@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -56,14 +57,8 @@ fun MainScreen() {
         mutableStateOf(
             CanopyState(
                 ready = true,
-                name1 = "a", name2 = "bb",
-                name3 = "ccc", name4 = "dddd",
-                name5 = "eeeee", name6 = "ffffff",
-                name7 = "ggggggg",
-                isOn1 = true, isOn2 = false,
-                isOn3 = false, isOn4 = false,
-                isOn5 = true, isOn6 = true,
-                isOn7 = false
+                nameList = listOf("a", "BB", "ccc", "DDDD", "eeeee", "FFFFFF", "ggggggg"),
+                isOnList = listOf(true, false, false, false, true, true, false)
             )
         )
     }
@@ -189,7 +184,7 @@ fun WaterTankCard(
                         Text(
                             text = "Насос:",
                             fontSize = 15.sp,
-                            modifier = Modifier.padding(top = 5.dp, end = 30.dp)
+                            modifier = Modifier.padding(top = 5.dp, end = 20.dp)
                         )
                     }
                 }
@@ -219,10 +214,7 @@ fun WaterTankCard(
                         onCheckedChange = {
                             /*TODO*/
                         },
-                        modifier = if (pinned.value == 0)
-                            Modifier.padding(start = 15.dp)
-                        else
-                            Modifier.padding(start = 30.dp)
+                        modifier = Modifier.padding(start = 15.dp)
                     )
                 }
             }
@@ -256,11 +248,95 @@ fun CanopyCard(
                         contentDescription = "Add button"
                     )
                 }
-            }
-            Column {
-
+                Row(
+                    modifier = Modifier.padding(start = 15.dp, top = 10.dp)
+                ) {
+                    Column {
+                        for (i in 0 until 4) {
+                            Row(
+                                modifier = Modifier.padding(top = 5.dp)
+                            ) {
+                                Text(text = "${canopyState.value.nameList[i]}: " +
+                                        if (canopyState.value.isOnList[i]) "on" else "off"
+                                )
+                            }
+                        }
+                    }
+                    Column(
+                        modifier = Modifier.padding(start = 20.dp)
+                    ) {
+                        for (i in 4 until 7) {
+                            Row(
+                                modifier = Modifier.padding(top = 5.dp)
+                            ) {
+                                Text(text = "${canopyState.value.nameList[i]}: " +
+                                        if (canopyState.value.isOnList[i]) "on" else "off"
+                                )
+                            }
+                        }
+                    }
+                }
+                Button(
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(end = 15.dp, bottom = 10.dp),
+                    onClick = { /*TODO*/ }
+                ) {
+                    Text(text = "Свет")
+                }
+            } else {
+                Column {
+                    for (i in 0 until 7) {
+                        CanopyRow(
+                            isReady = canopyState.value.switchReadyList[i],
+                            name = canopyState.value.nameList[i],
+                            isOn = canopyState.value.isOnList[i],
+                            index = i
+                        )
+                    }
+                    Button(
+                        onClick = { /*TODO*/ },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(15.dp)
+                    ) {
+                        Text(text = "Основной свет")
+                    }
+                }
             }
         }
+    }
+}
+
+@Composable
+fun CanopyRow(isReady: Boolean, name: String, isOn: Boolean, index: Int) {
+    Row(
+        modifier = if (index == 0)
+            Modifier
+                .fillMaxWidth()
+                .padding(start = 25.dp, top = 15.dp)
+        else
+            Modifier
+                .fillMaxWidth()
+                .padding(start = 25.dp, top = 5.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
+    ) {
+        IconButton(onClick = { /*TODO*/ }) {
+            Icon(painter = painterResource(
+                id = R.drawable.ic_rename_24),
+                contentDescription = "Rename button"
+            )
+        }
+        Text(
+            text = name,
+            fontSize = 17.sp
+        )
+        Switch(
+            checked = isOn,
+            onCheckedChange = { /*TODO*/ },
+            modifier = Modifier.padding(start = 15.dp)
+        )
     }
 }
 
