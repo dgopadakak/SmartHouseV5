@@ -29,6 +29,8 @@ fun MainScreen() {
         mutableStateOf(
             WaterTankState(
                 ready = true,
+                modeReady = true,
+                pumpReady = true,
                 percent = 65,
                 mode = 0,
                 time = 17,
@@ -40,6 +42,9 @@ fun MainScreen() {
         mutableStateOf(
             CanopyState(
                 ready = true,
+                glAviaryReady = true,
+                renameButtonReadyList = listOf(true, true, true, true, false, true, true),
+                switchReadyList = listOf(true, true, true, true, true, false, true),
                 nameList = listOf("a", "BB", "ccc", "DDDD", "eeeee", "FFFFFF", "ggggggg"),
                 isOnList = listOf(true, false, false, false, true, true, false)
             )
