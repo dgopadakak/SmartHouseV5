@@ -125,7 +125,7 @@ fun WaterTankCard(
         ) {
             if (pinned.value != 0) {
                 IconButton(
-                    onClick = { /*TODO*/ },
+                    onClick = { pinned.value = 0 },
                     modifier = Modifier.align(Alignment.TopEnd)
                 ) {
                     Icon(
@@ -238,7 +238,29 @@ fun CanopyCard(
     Card(
         modifier = Modifier.padding(10.dp)
     ) {
+        Box(
+            modifier = if (pinned.value == 1)
+                Modifier.fillMaxWidth()
+            else
+                Modifier
+                    .width(300.dp)
+                    .height(140.dp)
+        ) {
+            if (pinned.value != 1) {
+                IconButton(
+                    onClick = { pinned.value = 1 },
+                    modifier = Modifier.align(Alignment.TopEnd)
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_add_circle_outline_24),
+                        contentDescription = "Add button"
+                    )
+                }
+            }
+            Column {
 
+            }
+        }
     }
 }
 
@@ -250,6 +272,29 @@ fun DishwasherCard(
     Card(
         modifier = Modifier.padding(10.dp)
     ) {
-
+        Box(
+            modifier = if (pinned.value == 2)
+                Modifier.fillMaxWidth()
+            else
+                Modifier
+                    .width(300.dp)
+                    .height(140.dp)
+        ) {
+            if (pinned.value != 2) {
+                IconButton(
+                    onClick = { pinned.value = 2 },
+                    modifier = Modifier.align(Alignment.TopEnd)
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_add_circle_outline_24),
+                        contentDescription = "Add button"
+                    )
+                }
+            }
+            Text(
+                text = "Coming soon...",
+                modifier = Modifier.align(Alignment.Center)
+            )
+        }
     }
 }

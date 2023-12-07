@@ -2,6 +2,15 @@ package com.dgopadakak.smarthousev5.model.states
 
 data class CanopyState(
     val ready: Boolean = false,
+    val glAviaryReady: Boolean = true,
+    val switch1Ready: Boolean = true,
+    val switch2Ready: Boolean = true,
+    val switch3Ready: Boolean = true,
+    val switch4Ready: Boolean = true,
+    val switch5Ready: Boolean = true,
+    val switch6Ready: Boolean = true,
+    val switch7Ready: Boolean = true,
+
     val name1: String = "",
     val name2: String = "",
     val name3: String = "",
