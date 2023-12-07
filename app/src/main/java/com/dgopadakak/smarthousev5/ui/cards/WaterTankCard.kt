@@ -146,6 +146,7 @@ fun WaterTankCard(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         RadioButton(
+                            enabled = waterTankState.value.modeReady,
                             selected = waterTankState.value.mode == 0,
                             onClick = { /*TODO*/ },
                             modifier = Modifier
@@ -158,6 +159,7 @@ fun WaterTankCard(
                             modifier = Modifier.padding(start = 6.dp)
                         )
                         RadioButton(
+                            enabled = waterTankState.value.modeReady,
                             selected = waterTankState.value.mode == 1,
                             onClick = { /*TODO*/ },
                             modifier = Modifier
@@ -181,6 +183,7 @@ fun WaterTankCard(
                             )
                         }
                         Switch(
+                            enabled = waterTankState.value.pumpReady,
                             checked = waterTankState.value.isPumpOn,
                             onCheckedChange = {
                                 /*TODO*/

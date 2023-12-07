@@ -82,6 +82,7 @@ fun CanopyCard(
                     }
                 }
                 Button(
+                    enabled = canopyState.value.glAviaryReady,
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
                         .padding(end = 15.dp, bottom = 10.dp),
@@ -93,13 +94,15 @@ fun CanopyCard(
                 Column {
                     for (i in 0 until 7) {
                         CanopyRow(
-                            isReady = canopyState.value.switchReadyList[i],
+                            isRenameButtonReady = canopyState.value.renameButtonReadyList[i],
+                            isSwitchReady = canopyState.value.switchReadyList[i],
                             name = canopyState.value.nameList[i],
                             isOn = canopyState.value.isOnList[i],
                             index = i
                         )
                     }
                     Button(
+                        enabled = canopyState.value.glAviaryReady,
                         onClick = { /*TODO*/ },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -114,7 +117,13 @@ fun CanopyCard(
 }
 
 @Composable
-fun CanopyRow(isReady: Boolean, name: String, isOn: Boolean, index: Int) {
+fun CanopyRow(
+    isRenameButtonReady: Boolean,
+    isSwitchReady: Boolean,
+    name: String,
+    isOn: Boolean,
+    index: Int
+) {
     val density = LocalDensity.current
     Row(
         modifier = if (index == 0)
@@ -128,7 +137,10 @@ fun CanopyRow(isReady: Boolean, name: String, isOn: Boolean, index: Int) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
-        IconButton(onClick = { /*TODO*/ }) {
+        IconButton(
+            enabled = isRenameButtonReady,
+            onClick = { /*TODO*/ }
+        ) {
             Icon(painter = painterResource(
                 id = R.drawable.ic_rename_24),
                 contentDescription = "Rename button"
@@ -139,6 +151,7 @@ fun CanopyRow(isReady: Boolean, name: String, isOn: Boolean, index: Int) {
             fontSize = with(density) { 17.dp.toSp() }
         )
         Switch(
+            enabled = isSwitchReady,
             checked = isOn,
             onCheckedChange = { /*TODO*/ },
             modifier = Modifier.padding(start = 15.dp)
