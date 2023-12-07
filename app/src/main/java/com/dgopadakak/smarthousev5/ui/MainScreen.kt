@@ -115,7 +115,7 @@ fun WaterTankCard(
     Card(
         modifier = Modifier.padding(10.dp)
     ) {
-        Column(
+        Box(
             modifier = if (pinned.value == 0)
                 Modifier.fillMaxWidth()
             else
@@ -123,113 +123,108 @@ fun WaterTankCard(
                     .width(300.dp)
                     .height(140.dp)
         ) {
-            Row(
-                horizontalArrangement = if (pinned.value == 0)
-                    Arrangement.Start
-                else
-                    Arrangement.SpaceBetween,
-                modifier = if (pinned.value == 0)
-                    Modifier.fillMaxWidth()
-                else
-                    Modifier.width(300.dp)
-
-            ) {
-                Box(
-                    modifier = if (pinned.value == 0)
-                        Modifier.padding(start = 15.dp, top = 15.dp)
-                    else
-                        Modifier.padding(start = 10.dp, top = 10.dp, end = 15.dp),
-                    contentAlignment = Alignment.Center
+            if (pinned.value != 0) {
+                IconButton(
+                    onClick = { /*TODO*/ },
+                    modifier = Modifier.align(Alignment.TopEnd)
                 ) {
-                    GradientProgressIndicator(
-                        progress = 0.01f * waterTankState.value.percent,
-                        gradientStart = LightBlue,
-                        gradientEnd = Color.Blue,
-                        trackColor = Color.Gray,
-                        strokeWidth = if (pinned.value == 0)
-                            15.dp
-                        else
-                            5.dp,
-                        modifier = if (pinned.value == 0)
-                            Modifier.size(160.dp)
-                        else
-                            Modifier.size(45.dp)
-                    )
-                    Text(
-                        text = "${waterTankState.value.percent}%",
-                        modifier = Modifier.align(Alignment.Center),
-                        fontSize = if (pinned.value == 0) 25.sp else 15.sp
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_add_circle_outline_24),
+                        contentDescription = "Add button"
                     )
                 }
-                Text(
-                    text = "Время работы: ${waterTankState.value.time} мин.",
-                    fontSize = if (pinned.value == 0) 16.sp else 15.sp,
-                    modifier = if (pinned.value == 0)
-                        Modifier.padding(vertical = 25.dp)
-                    else
-                        Modifier.padding(top = 19.dp)
-                )
-                if (pinned.value != 0) {
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_add_circle_outline_24),
-                            contentDescription = "Add button"
+            }
+            Column {
+                Row {
+                    Box(
+                        modifier = if (pinned.value == 0)
+                            Modifier.padding(start = 15.dp, top = 15.dp)
+                        else
+                            Modifier.padding(start = 10.dp, top = 10.dp, end = 15.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        GradientProgressIndicator(
+                            progress = 0.01f * waterTankState.value.percent,
+                            gradientStart = LightBlue,
+                            gradientEnd = Color.Blue,
+                            trackColor = Color.Gray,
+                            strokeWidth = if (pinned.value == 0)
+                                15.dp
+                            else
+                                5.dp,
+                            modifier = if (pinned.value == 0)
+                                Modifier.size(160.dp)
+                            else
+                                Modifier.size(45.dp)
+                        )
+                        Text(
+                            text = "${waterTankState.value.percent}%",
+                            modifier = Modifier.align(Alignment.Center),
+                            fontSize = if (pinned.value == 0) 25.sp else 15.sp
+                        )
+                    }
+                    Text(
+                        text = "Время работы: ${waterTankState.value.time} мин.",
+                        fontSize = if (pinned.value == 0) 16.sp else 15.sp,
+                        modifier = if (pinned.value == 0)
+                            Modifier.padding(vertical = 25.dp)
+                        else
+                            Modifier.padding(top = 19.dp)
+                    )
+                }
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    Text(
+                        text = "Режим работы:",
+                        fontSize = if (pinned.value == 0) 17.sp else 15.sp,
+                        modifier = if (pinned.value == 0)
+                            Modifier.padding(start = 12.dp, top = 15.dp)
+                        else
+                            Modifier.padding(start = 12.dp, top = 5.dp)
+                    )
+                    if (pinned.value != 0) {
+                        Text(
+                            text = "Насос:",
+                            fontSize = 15.sp,
+                            modifier = Modifier.padding(top = 5.dp, end = 30.dp)
                         )
                     }
                 }
-            }
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                Text(
-                    text = "Режим работы:",
-                    fontSize = if (pinned.value == 0) 17.sp else 15.sp,
-                    modifier = if (pinned.value == 0)
-                        Modifier.padding(start = 12.dp, top = 15.dp)
-                    else
-                        Modifier.padding(start = 12.dp, top = 5.dp)
-                )
-                if (pinned.value != 0) {
-                    Text(
-                        text = "Насос:",
-                        fontSize = 15.sp,
-                        modifier = Modifier.padding(top = 5.dp, end = 30.dp)
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(bottom = 10.dp)
+                ) {
+                    RadioButton(
+                        selected = waterTankState.value.mode == 0,
+                        onClick = { /*TODO*/ }
+                    )
+                    Text(text = "В дом")
+                    RadioButton(
+                        selected = waterTankState.value.mode == 1,
+                        onClick = { /*TODO*/ }
+                    )
+                    Text(text = "На улицу")
+                    if (pinned.value == 0) {
+                        Text(
+                            text = "Насос:",
+                            modifier = Modifier.padding(start = 35.dp)
+                        )
+                    }
+                    Switch(
+                        checked = waterTankState.value.isPumpOn,
+                        onCheckedChange = {
+                            /*TODO*/
+                        },
+                        modifier = if (pinned.value == 0)
+                            Modifier.padding(start = 15.dp)
+                        else
+                            Modifier.padding(start = 30.dp)
                     )
                 }
-            }
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(bottom = 10.dp)
-            ) {
-                RadioButton(
-                    selected = waterTankState.value.mode == 0,
-                    onClick = { /*TODO*/ }
-                )
-                Text(text = "В дом")
-                RadioButton(
-                    selected = waterTankState.value.mode == 1,
-                    onClick = { /*TODO*/ }
-                )
-                Text(text = "На улицу")
-                if (pinned.value == 0) {
-                    Text(
-                        text = "Насос:",
-                        modifier = Modifier.padding(start = 35.dp)
-                    )
-                }
-                Switch(
-                    checked = waterTankState.value.isPumpOn,
-                    onCheckedChange = {
-                        /*TODO*/
-                    },
-                    modifier = if (pinned.value == 0)
-                        Modifier.padding(start = 15.dp)
-                    else
-                        Modifier.padding(start = 30.dp)
-                )
             }
         }
     }
