@@ -214,7 +214,10 @@ fun WaterTankCard(
                         onCheckedChange = {
                             /*TODO*/
                         },
-                        modifier = Modifier.padding(start = 15.dp)
+                        modifier = if (pinned.value == 0)
+                            Modifier.padding(start = 15.dp)
+                        else
+                            Modifier.padding(start = 38.dp)
                     )
                 }
             }
