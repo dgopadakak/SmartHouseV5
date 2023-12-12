@@ -29,7 +29,115 @@ import com.dgopadakak.smarthousev5.ui.GradientProgressIndicator
 import com.dgopadakak.smarthousev5.ui.theme.LightBlue
 
 @Composable
-fun WaterTankCard(
+fun WaterTankCardLarge(waterTankState: MutableState<WaterTankState>) {
+    val density = LocalDensity.current
+    Card(
+        modifier = Modifier.padding(10.dp)
+    ) {
+        Column(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row {
+                Box(
+                    modifier = Modifier.padding(start = 15.dp, top = 15.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    GradientProgressIndicator(
+                        progress = 0.01f * waterTankState.value.percent,
+                        gradientStart = LightBlue,
+                        gradientEnd = Color.Blue,
+                        trackColor = Color.Gray,
+                        strokeWidth = 15.dp,
+                        modifier = Modifier.size(160.dp)
+                    )
+                    Text(
+                        text = "${waterTankState.value.percent}%",
+                        modifier = Modifier.align(Alignment.Center),
+                        fontSize = with(density) { 25.dp.toSp() }
+                    )
+                }
+                Column(
+                    modifier = Modifier.padding(start = 5.dp, top = 15.dp)
+                ) {
+                    Text(
+                        text = "Насос ${
+                            if (waterTankState.value.isPumpOn)
+                                "работает"
+                            else
+                                "работал"
+                        }:"
+                    )
+                    Text(text = "${waterTankState.value.time} мин.")
+                }
+            }
+
+            Text(
+                text = "Режим работы:",
+                fontSize = with(density) { 17.dp.toSp() },
+                modifier = Modifier.padding(start = 12.dp, top = 15.dp)
+            )
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 10.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    RadioButton(
+                        enabled = waterTankState.value.modeReady,
+                        selected = waterTankState.value.mode == 0,
+                        onClick = { /*TODO*/ },
+                        modifier = Modifier
+                            .size(30.dp)
+                            .padding(start = 15.dp)
+                    )
+                    Text(
+                        text = "В дом",
+                        fontSize = with(density) { 14.dp.toSp() },
+                        modifier = Modifier.padding(start = 6.dp)
+                    )
+                    RadioButton(
+                        enabled = waterTankState.value.modeReady,
+                        selected = waterTankState.value.mode == 1,
+                        onClick = { /*TODO*/ },
+                        modifier = Modifier
+                            .size(30.dp)
+                            .padding(start = 15.dp)
+                    )
+                    Text(
+                        text = "На улицу",
+                        fontSize = with(density) { 14.dp.toSp() },
+                        modifier = Modifier.padding(start = 6.dp)
+                    )
+                }
+                Row(
+                    modifier = Modifier.padding(end = 15.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Насос:",
+                        fontSize = with(density) { 14.dp.toSp() }
+                    )
+                    Switch(
+                        enabled = waterTankState.value.pumpReady,
+                        checked = waterTankState.value.isPumpOn,
+                        onCheckedChange = {
+                            /*TODO*/
+                        },
+                        modifier = Modifier.padding(start = 10.dp)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun WaterTankCardSmall(
     pinned: MutableState<Int>,
     waterTankState: MutableState<WaterTankState>
 ) {
@@ -38,31 +146,23 @@ fun WaterTankCard(
         modifier = Modifier.padding(10.dp)
     ) {
         Box(
-            modifier = if (pinned.value == 0)
-                Modifier.fillMaxWidth()
-            else
-                Modifier
-                    .width(300.dp)
-                    .height(140.dp)
+            modifier = Modifier
+                .width(300.dp)
+                .height(140.dp)
         ) {
-            if (pinned.value != 0) {
-                IconButton(
-                    onClick = { pinned.value = 0 },
-                    modifier = Modifier.align(Alignment.TopEnd)
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_add_circle_outline_24),
-                        contentDescription = "Add button"
-                    )
-                }
+            IconButton(
+                onClick = { pinned.value = 0 },
+                modifier = Modifier.align(Alignment.TopEnd)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_add_circle_outline_24),
+                    contentDescription = "Add button"
+                )
             }
             Column {
                 Row {
                     Box(
-                        modifier = if (pinned.value == 0)
-                            Modifier.padding(start = 15.dp, top = 15.dp)
-                        else
-                            Modifier.padding(start = 10.dp, top = 10.dp, end = 15.dp),
+                        modifier = Modifier.padding(start = 10.dp, top = 10.dp, end = 15.dp),
                         contentAlignment = Alignment.Center
                     ) {
                         GradientProgressIndicator(
@@ -70,47 +170,26 @@ fun WaterTankCard(
                             gradientStart = LightBlue,
                             gradientEnd = Color.Blue,
                             trackColor = Color.Gray,
-                            strokeWidth = if (pinned.value == 0)
-                                15.dp
-                            else
-                                5.dp,
-                            modifier = if (pinned.value == 0)
-                                Modifier.size(160.dp)
-                            else
-                                Modifier.size(45.dp)
+                            strokeWidth = 5.dp,
+                            modifier = Modifier.size(45.dp)
                         )
                         Text(
                             text = "${waterTankState.value.percent}%",
                             modifier = Modifier.align(Alignment.Center),
-                            fontSize = if (pinned.value == 0)
-                                with(density) { 25.dp.toSp() }
-                            else
-                                with(density) { 15.dp.toSp() }
+                            fontSize = with(density) { 15.dp.toSp() }
                         )
                     }
-                    if (pinned.value != 0) {
-                        Text(
-                            text = "Насос ${if (waterTankState.value.isPumpOn)
+                    Text(
+                        text = "Насос ${
+                            if (waterTankState.value.isPumpOn)
                                 "работает"
                             else
-                                "работал"}: " +
-                                    "${waterTankState.value.time} мин.",
-                            fontSize = with(density) { 15.dp.toSp() },
-                            modifier = Modifier.padding(top = 19.dp)
-                        )
-                    } else {
-                        Column(
-                            modifier = Modifier.padding(start = 5.dp, top = 15.dp)
-                        ) {
-                            Text(
-                                text = "Насос ${if (waterTankState.value.isPumpOn)
-                                    "работает"
-                                else
-                                    "работал"}:"
-                            )
-                            Text(text = "${waterTankState.value.time} мин.")
-                        }
-                    }
+                                "работал"
+                        }: " +
+                                "${waterTankState.value.time} мин.",
+                        fontSize = with(density) { 15.dp.toSp() },
+                        modifier = Modifier.padding(top = 19.dp)
+                    )
                 }
 
                 Row(
@@ -119,26 +198,20 @@ fun WaterTankCard(
                 ) {
                     Text(
                         text = "Режим работы:",
-                        fontSize = if (pinned.value == 0)
-                            with(density) { 17.dp.toSp() }
-                        else
-                            with(density) { 15.dp.toSp() },
-                        modifier = if (pinned.value == 0)
-                            Modifier.padding(start = 12.dp, top = 15.dp)
-                        else
-                            Modifier.padding(start = 12.dp, top = 5.dp)
+                        fontSize = with(density) { 15.dp.toSp() },
+                        modifier = Modifier.padding(start = 12.dp, top = 5.dp)
                     )
-                    if (pinned.value != 0) {
-                        Text(
-                            text = "Насос:",
-                            fontSize = with(density) { 15.dp.toSp() },
-                            modifier = Modifier.padding(top = 5.dp, end = 17.dp)
-                        )
-                    }
+                    Text(
+                        text = "Насос:",
+                        fontSize = with(density) { 15.dp.toSp() },
+                        modifier = Modifier.padding(top = 5.dp, end = 17.dp)
+                    )
                 }
 
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 10.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 10.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
@@ -172,28 +245,14 @@ fun WaterTankCard(
                             modifier = Modifier.padding(start = 6.dp)
                         )
                     }
-                    Row(
-                        modifier = Modifier.padding(end = 15.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        if (pinned.value == 0) {
-                            Text(
-                                text = "Насос:",
-                                fontSize = with(density) { 14.dp.toSp() }
-                            )
-                        }
-                        Switch(
-                            enabled = waterTankState.value.pumpReady,
-                            checked = waterTankState.value.isPumpOn,
-                            onCheckedChange = {
-                                /*TODO*/
-                            },
-                            modifier = if (pinned.value == 0)
-                                Modifier.padding(start = 10.dp)
-                            else
-                                Modifier.padding(start = 29.dp)
-                        )
-                    }
+                    Switch(
+                        enabled = waterTankState.value.pumpReady,
+                        checked = waterTankState.value.isPumpOn,
+                        onCheckedChange = {
+                            /*TODO*/
+                        },
+                        modifier = Modifier.padding(start = 29.dp, end = 15.dp)
+                    )
                 }
             }
         }

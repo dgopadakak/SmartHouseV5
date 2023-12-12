@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -17,14 +18,55 @@ import com.dgopadakak.smarthousev5.model.states.DishwasherState
 import com.dgopadakak.smarthousev5.model.states.WaterTankState
 import com.dgopadakak.smarthousev5.ui.cards.CanopyCard
 import com.dgopadakak.smarthousev5.ui.cards.DishwasherCard
-import com.dgopadakak.smarthousev5.ui.cards.WaterTankCard
+import com.dgopadakak.smarthousev5.ui.cards.WaterTankCardLarge
+import com.dgopadakak.smarthousev5.ui.cards.WaterTankCardSmall
+import com.dgopadakak.smarthousev5.ui.theme.SmartHouseV5Theme
 
-@Preview(showSystemUi = true)
+
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    waterTankState: MutableState<WaterTankState>,
+    canopyState: MutableState<CanopyState>,
+    dishwasherState: MutableState<DishwasherState>
+) {
     val pinned = remember {
         mutableIntStateOf(0)
     }
+
+    Column {
+        when (pinned.intValue) {
+            0 -> WaterTankCardLarge(waterTankState = waterTankState)
+            1 -> CanopyCard(pinned = pinned, canopyState = canopyState)
+            2 -> DishwasherCard(pinned = pinned, dishwasherState = dishwasherState)
+        }
+        Row(
+            modifier = Modifier
+                .padding(top = 15.dp)
+                .horizontalScroll(rememberScrollState())
+        ) {
+            when (pinned.intValue) {
+                0 -> {
+                    CanopyCard(pinned = pinned, canopyState = canopyState)
+                    DishwasherCard(pinned = pinned, dishwasherState = dishwasherState)
+                }
+
+                1 -> {
+                    WaterTankCardSmall(pinned = pinned, waterTankState = waterTankState)
+                    DishwasherCard(pinned = pinned, dishwasherState = dishwasherState)
+                }
+
+                2 -> {
+                    WaterTankCardSmall(pinned = pinned, waterTankState = waterTankState)
+                    CanopyCard(pinned = pinned, canopyState = canopyState)
+                }
+            }
+        }
+    }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun MainScreenPreview() {
     val waterTankState = remember {
         mutableStateOf(
             WaterTankState(
@@ -59,33 +101,17 @@ fun MainScreen() {
         )
     }
 
-    Column {
-        when (pinned.intValue) {
-            0 -> WaterTankCard(pinned = pinned, waterTankState = waterTankState)
-            1 -> CanopyCard(pinned = pinned, canopyState = canopyState)
-            2 -> DishwasherCard(pinned = pinned, dishwasherState = dishwasherState)
-        }
-        Row(
-            modifier = Modifier
-                .padding(top = 15.dp)
-                .horizontalScroll(rememberScrollState())
-        ) {
-            when (pinned.intValue) {
-                0 -> {
-                    CanopyCard(pinned = pinned, canopyState = canopyState)
-                    DishwasherCard(pinned = pinned, dishwasherState = dishwasherState)
-                }
-
-                1 -> {
-                    WaterTankCard(pinned = pinned, waterTankState = waterTankState)
-                    DishwasherCard(pinned = pinned, dishwasherState = dishwasherState)
-                }
-
-                2 -> {
-                    WaterTankCard(pinned = pinned, waterTankState = waterTankState)
-                    CanopyCard(pinned = pinned, canopyState = canopyState)
-                }
-            }
-        }
+    SmartHouseV5Theme {
+                MainScreen(
+                    waterTankState = waterTankState,
+                    canopyState = canopyState,
+                    dishwasherState = dishwasherState
+                )
+//                Surface(
+//                    modifier = Modifier.fillMaxSize(),
+//                    color = MaterialTheme.colorScheme.background
+//                ) {
+//                    MainScreen()
+//                }
     }
 }
