@@ -16,7 +16,8 @@ import androidx.compose.ui.unit.dp
 import com.dgopadakak.smarthousev5.model.states.CanopyState
 import com.dgopadakak.smarthousev5.model.states.DishwasherState
 import com.dgopadakak.smarthousev5.model.states.WaterTankState
-import com.dgopadakak.smarthousev5.ui.cards.CanopyCard
+import com.dgopadakak.smarthousev5.ui.cards.CanopyCardLarge
+import com.dgopadakak.smarthousev5.ui.cards.CanopyCardSmall
 import com.dgopadakak.smarthousev5.ui.cards.DishwasherCard
 import com.dgopadakak.smarthousev5.ui.cards.WaterTankCardLarge
 import com.dgopadakak.smarthousev5.ui.cards.WaterTankCardSmall
@@ -36,7 +37,7 @@ fun MainScreen(
     Column {
         when (pinned.intValue) {
             0 -> WaterTankCardLarge(waterTankState = waterTankState)
-            1 -> CanopyCard(pinned = pinned, canopyState = canopyState)
+            1 -> CanopyCardLarge(canopyState = canopyState)
             2 -> DishwasherCard(pinned = pinned, dishwasherState = dishwasherState)
         }
         Row(
@@ -46,7 +47,7 @@ fun MainScreen(
         ) {
             when (pinned.intValue) {
                 0 -> {
-                    CanopyCard(pinned = pinned, canopyState = canopyState)
+                    CanopyCardSmall(pinned = pinned, canopyState = canopyState)
                     DishwasherCard(pinned = pinned, dishwasherState = dishwasherState)
                 }
 
@@ -57,7 +58,7 @@ fun MainScreen(
 
                 2 -> {
                     WaterTankCardSmall(pinned = pinned, waterTankState = waterTankState)
-                    CanopyCard(pinned = pinned, canopyState = canopyState)
+                    CanopyCardSmall(pinned = pinned, canopyState = canopyState)
                 }
             }
         }

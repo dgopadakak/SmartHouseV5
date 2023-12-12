@@ -25,7 +25,39 @@ import com.dgopadakak.smarthousev5.R
 import com.dgopadakak.smarthousev5.model.states.CanopyState
 
 @Composable
-fun CanopyCard(
+fun CanopyCardLarge(canopyState: MutableState<CanopyState>) {
+    Card(
+        modifier = Modifier.padding(10.dp)
+    ) {
+        Box(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column {
+                for (i in 0 until 7) {
+                    CanopyRow(
+                        isRenameButtonReady = canopyState.value.renameButtonReadyList[i],
+                        isSwitchReady = canopyState.value.switchReadyList[i],
+                        name = canopyState.value.nameList[i],
+                        isOn = canopyState.value.isOnList[i],
+                        index = i
+                    )
+                }
+                Button(
+                    enabled = canopyState.value.glAviaryReady,
+                    onClick = { /*TODO*/ },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(15.dp)
+                ) {
+                    Text(text = "Основной свет")
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun CanopyCardSmall(
     pinned: MutableState<Int>,
     canopyState: MutableState<CanopyState>
 ) {
@@ -34,83 +66,57 @@ fun CanopyCard(
         modifier = Modifier.padding(10.dp)
     ) {
         Box(
-            modifier = if (pinned.value == 1)
-                Modifier.fillMaxWidth()
-            else
-                Modifier
+            modifier = Modifier
                     .width(300.dp)
                     .height(140.dp)
         ) {
-            if (pinned.value != 1) {
-                IconButton(
-                    onClick = { pinned.value = 1 },
-                    modifier = Modifier.align(Alignment.TopEnd)
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_add_circle_outline_24),
-                        contentDescription = "Add button"
-                    )
-                }
-                Row(
-                    modifier = Modifier.padding(start = 15.dp, top = 10.dp)
-                ) {
-                    Column {
-                        for (i in 0 until 4) {
-                            Row(
-                                modifier = Modifier.padding(top = 5.dp)
-                            ) {
-                                Text(text = "${canopyState.value.nameList[i]}: " +
-                                        if (canopyState.value.isOnList[i]) "on" else "off",
-                                    fontSize = with(density) { 14.dp.toSp() }
-                                )
-                            }
-                        }
-                    }
-                    Column(
-                        modifier = Modifier.padding(start = 20.dp)
-                    ) {
-                        for (i in 4 until 7) {
-                            Row(
-                                modifier = Modifier.padding(top = 5.dp)
-                            ) {
-                                Text(text = "${canopyState.value.nameList[i]}: " +
-                                        if (canopyState.value.isOnList[i]) "on" else "off",
-                                    fontSize = with(density) { 14.dp.toSp() }
-                                )
-                            }
-                        }
-                    }
-                }
-                Button(
-                    enabled = canopyState.value.glAviaryReady,
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(end = 15.dp, bottom = 10.dp),
-                    onClick = { /*TODO*/ }
-                ) {
-                    Text(text = "Свет")
-                }
-            } else {
+            IconButton(
+                onClick = { pinned.value = 1 },
+                modifier = Modifier.align(Alignment.TopEnd)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_add_circle_outline_24),
+                    contentDescription = "Add button"
+                )
+            }
+            Row(
+                modifier = Modifier.padding(start = 15.dp, top = 10.dp)
+            ) {
                 Column {
-                    for (i in 0 until 7) {
-                        CanopyRow(
-                            isRenameButtonReady = canopyState.value.renameButtonReadyList[i],
-                            isSwitchReady = canopyState.value.switchReadyList[i],
-                            name = canopyState.value.nameList[i],
-                            isOn = canopyState.value.isOnList[i],
-                            index = i
-                        )
-                    }
-                    Button(
-                        enabled = canopyState.value.glAviaryReady,
-                        onClick = { /*TODO*/ },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(15.dp)
-                    ) {
-                        Text(text = "Основной свет")
+                    for (i in 0 until 4) {
+                        Row(
+                            modifier = Modifier.padding(top = 5.dp)
+                        ) {
+                            Text(text = "${canopyState.value.nameList[i]}: " +
+                                    if (canopyState.value.isOnList[i]) "on" else "off",
+                                fontSize = with(density) { 14.dp.toSp() }
+                            )
+                        }
                     }
                 }
+                Column(
+                    modifier = Modifier.padding(start = 20.dp)
+                ) {
+                    for (i in 4 until 7) {
+                        Row(
+                            modifier = Modifier.padding(top = 5.dp)
+                        ) {
+                            Text(text = "${canopyState.value.nameList[i]}: " +
+                                    if (canopyState.value.isOnList[i]) "on" else "off",
+                                fontSize = with(density) { 14.dp.toSp() }
+                            )
+                        }
+                    }
+                }
+            }
+            Button(
+                enabled = canopyState.value.glAviaryReady,
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(end = 15.dp, bottom = 10.dp),
+                onClick = { /*TODO*/ }
+            ) {
+                Text(text = "Свет")
             }
         }
     }
