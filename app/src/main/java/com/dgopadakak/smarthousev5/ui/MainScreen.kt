@@ -113,7 +113,11 @@ fun MainScreenPreview() {
 //                    modifier = Modifier.fillMaxSize(),
 //                    color = MaterialTheme.colorScheme.background
 //                ) {
-//                    MainScreen()
+//                    MainScreen(
+//                        waterTankState = waterTankState,
+//                        canopyState = canopyState,
+//                        dishwasherState = dishwasherState
+//                    )
 //                }
     }
 }
