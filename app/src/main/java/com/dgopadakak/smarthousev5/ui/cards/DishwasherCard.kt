@@ -19,7 +19,25 @@ import com.dgopadakak.smarthousev5.R
 import com.dgopadakak.smarthousev5.model.states.DishwasherState
 
 @Composable
-fun DishwasherCard(
+fun DishwasherCardLarge(dishwasherState: MutableState<DishwasherState>) {
+    Card(
+        modifier = Modifier.padding(10.dp)
+    ) {
+        Box(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                text = "Coming soon...",
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .padding(vertical = 40.dp)
+            )
+        }
+    }
+}
+
+@Composable
+fun DishwasherCardSmall(
     pinned: MutableState<Int>,
     dishwasherState: MutableState<DishwasherState>
 ) {
@@ -27,23 +45,18 @@ fun DishwasherCard(
         modifier = Modifier.padding(10.dp)
     ) {
         Box(
-            modifier = if (pinned.value == 2)
-                Modifier.fillMaxWidth()
-            else
-                Modifier
+            modifier = Modifier
                     .width(300.dp)
                     .height(140.dp)
         ) {
-            if (pinned.value != 2) {
-                IconButton(
-                    onClick = { pinned.value = 2 },
-                    modifier = Modifier.align(Alignment.TopEnd)
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_add_circle_outline_24),
-                        contentDescription = "Add button"
-                    )
-                }
+            IconButton(
+                onClick = { pinned.value = 2 },
+                modifier = Modifier.align(Alignment.TopEnd)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_add_circle_outline_24),
+                    contentDescription = "Add button"
+                )
             }
             Text(
                 text = "Coming soon...",
