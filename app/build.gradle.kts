@@ -61,8 +61,6 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
 
-    implementation("com.google.dagger:dagger:2.48")
-    kapt("com.google.dagger:dagger-compiler:2.48")
     implementation("io.reactivex.rxjava3:rxjava:3.1.7")
     implementation("io.reactivex.rxjava3:rxandroid:3.0.2")
     implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0")
