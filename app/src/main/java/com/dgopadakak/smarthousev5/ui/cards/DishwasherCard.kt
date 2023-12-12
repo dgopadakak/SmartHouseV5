@@ -46,8 +46,8 @@ fun DishwasherCardSmall(
     ) {
         Box(
             modifier = Modifier
-                    .width(300.dp)
-                    .height(140.dp)
+                .width(300.dp)
+                .height(140.dp)
         ) {
             IconButton(
                 onClick = { pinned.value = 2 },

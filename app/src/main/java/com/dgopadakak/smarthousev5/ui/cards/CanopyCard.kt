@@ -131,8 +131,10 @@ private fun CanopyRow(
             enabled = isRenameButtonReady,
             onClick = { /*TODO*/ }
         ) {
-            Icon(painter = painterResource(
-                id = R.drawable.ic_rename_24),
+            Icon(
+                painter = painterResource(
+                    id = R.drawable.ic_rename_24
+                ),
                 contentDescription = "Rename button"
             )
         }

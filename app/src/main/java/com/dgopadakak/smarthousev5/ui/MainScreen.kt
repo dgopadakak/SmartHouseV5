@@ -104,11 +104,11 @@ fun MainScreenPreview() {
     }
 
     SmartHouseV5Theme {
-                MainScreen(
-                    waterTankState = waterTankState,
-                    canopyState = canopyState,
-                    dishwasherState = dishwasherState
-                )
+        MainScreen(
+            waterTankState = waterTankState,
+            canopyState = canopyState,
+            dishwasherState = dishwasherState
+        )
 //                Surface(
 //                    modifier = Modifier.fillMaxSize(),
 //                    color = MaterialTheme.colorScheme.background
