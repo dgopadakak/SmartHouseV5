@@ -61,14 +61,13 @@ fun CanopyCardSmall(
     pinned: MutableState<Int>,
     canopyState: MutableState<CanopyState>
 ) {
-    val density = LocalDensity.current
     Card(
         modifier = Modifier.padding(10.dp)
     ) {
         Box(
             modifier = Modifier
-                    .width(300.dp)
-                    .height(140.dp)
+                .width(300.dp)
+                .height(140.dp)
         ) {
             IconButton(
                 onClick = { pinned.value = 1 },
@@ -82,32 +81,17 @@ fun CanopyCardSmall(
             Row(
                 modifier = Modifier.padding(start = 15.dp, top = 10.dp)
             ) {
-                Column {
-                    for (i in 0 until 4) {
-                        Row(
-                            modifier = Modifier.padding(top = 5.dp)
-                        ) {
-                            Text(text = "${canopyState.value.nameList[i]}: " +
-                                    if (canopyState.value.isOnList[i]) "on" else "off",
-                                fontSize = with(density) { 14.dp.toSp() }
-                            )
-                        }
-                    }
-                }
-                Column(
+                CanopyColumn(
+                    startIndex = 0,
+                    endIndex = 4,
+                    canopyState = canopyState
+                )
+                CanopyColumn(
+                    startIndex = 4,
+                    endIndex = 7,
+                    canopyState = canopyState,
                     modifier = Modifier.padding(start = 20.dp)
-                ) {
-                    for (i in 4 until 7) {
-                        Row(
-                            modifier = Modifier.padding(top = 5.dp)
-                        ) {
-                            Text(text = "${canopyState.value.nameList[i]}: " +
-                                    if (canopyState.value.isOnList[i]) "on" else "off",
-                                fontSize = with(density) { 14.dp.toSp() }
-                            )
-                        }
-                    }
-                }
+                )
             }
             Button(
                 enabled = canopyState.value.glAviaryReady,
@@ -123,7 +107,7 @@ fun CanopyCardSmall(
 }
 
 @Composable
-fun CanopyRow(
+private fun CanopyRow(
     isRenameButtonReady: Boolean,
     isSwitchReady: Boolean,
     name: String,
@@ -162,5 +146,29 @@ fun CanopyRow(
             onCheckedChange = { /*TODO*/ },
             modifier = Modifier.padding(start = 15.dp)
         )
+    }
+}
+
+@Composable
+private fun CanopyColumn(
+    startIndex: Int,
+    endIndex: Int,
+    canopyState: MutableState<CanopyState>,
+    modifier: Modifier = Modifier
+) {
+    val density = LocalDensity.current
+    Column(
+        modifier = modifier
+    ) {
+        for (i in startIndex until endIndex) {
+            Row(
+                modifier = Modifier.padding(top = 5.dp)
+            ) {
+                Text(text = "${canopyState.value.nameList[i]}: " +
+                        if (canopyState.value.isOnList[i]) "on" else "off",
+                    fontSize = with(density) { 14.dp.toSp() }
+                )
+            }
+        }
     }
 }
