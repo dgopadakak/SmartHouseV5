@@ -1,4 +1,4 @@
-package com.dgopadakak.smarthousev5.model
+package com.dgopadakak.smarthousev5.data
 
 import android.content.Context
 import io.reactivex.rxjava3.core.Completable

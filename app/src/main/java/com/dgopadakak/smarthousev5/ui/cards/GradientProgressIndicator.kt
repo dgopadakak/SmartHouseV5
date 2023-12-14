@@ -1,4 +1,4 @@
-package com.dgopadakak.smarthousev5.ui
+package com.dgopadakak.smarthousev5.ui.cards
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.progressSemantics

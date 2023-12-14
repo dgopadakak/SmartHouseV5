@@ -13,9 +13,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.dgopadakak.smarthousev5.model.states.CanopyState
-import com.dgopadakak.smarthousev5.model.states.DishwasherState
-import com.dgopadakak.smarthousev5.model.states.WaterTankState
+import com.dgopadakak.smarthousev5.ui.states.CanopyState
+import com.dgopadakak.smarthousev5.ui.states.DishwasherState
+import com.dgopadakak.smarthousev5.ui.states.WaterTankState
 import com.dgopadakak.smarthousev5.ui.cards.CanopyCardLarge
 import com.dgopadakak.smarthousev5.ui.cards.CanopyCardSmall
 import com.dgopadakak.smarthousev5.ui.cards.DishwasherCardLarge

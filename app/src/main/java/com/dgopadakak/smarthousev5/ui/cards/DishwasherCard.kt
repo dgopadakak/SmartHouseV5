@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.dgopadakak.smarthousev5.R
-import com.dgopadakak.smarthousev5.model.states.DishwasherState
+import com.dgopadakak.smarthousev5.ui.states.DishwasherState
 
 @Composable
 fun DishwasherCardLarge(dishwasherState: MutableState<DishwasherState>) {

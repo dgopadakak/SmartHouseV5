@@ -1,4 +1,4 @@
-package com.dgopadakak.smarthousev5.model.states
+package com.dgopadakak.smarthousev5.ui.states
 
 data class WaterTankState(
     val ready: Boolean = false,

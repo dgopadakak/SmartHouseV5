@@ -22,7 +22,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.dgopadakak.smarthousev5.R
-import com.dgopadakak.smarthousev5.model.states.CanopyState
+import com.dgopadakak.smarthousev5.ui.states.CanopyState
 
 @Composable
 fun CanopyCardLarge(canopyState: MutableState<CanopyState>) {

@@ -28,8 +28,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.dgopadakak.smarthousev5.R
-import com.dgopadakak.smarthousev5.model.states.WaterTankState
-import com.dgopadakak.smarthousev5.ui.GradientProgressIndicator
+import com.dgopadakak.smarthousev5.ui.states.WaterTankState
 import com.dgopadakak.smarthousev5.ui.theme.LightBlue
 import com.dgopadakak.smarthousev5.ui.theme.LightGray
 
