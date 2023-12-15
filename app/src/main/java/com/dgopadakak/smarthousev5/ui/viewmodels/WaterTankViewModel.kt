@@ -11,6 +11,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 class WaterTankViewModel(context: Context) : ViewModel() {
     companion object {
@@ -41,7 +42,7 @@ class WaterTankViewModel(context: Context) : ViewModel() {
         startConnection()
     }
 
-    fun startConnection() {
+    private fun startConnection() {
         _waterTankUiState.value = _waterTankUiState.value.copy(ready = false)
         disposeBag.add(
             mqttHelper.connect()
@@ -66,10 +67,8 @@ class WaterTankViewModel(context: Context) : ViewModel() {
                 .subscribe(
                     {
                         startListening()
-                        createPercentSubscriber()
-                        createModeSubscriber()
-                        createPumpSubscriber()
-                        createTimeSubscriber()
+                        createSubscribers()
+                        makeRequests()
                     },
                     {
                         /*TODO*/
@@ -78,22 +77,53 @@ class WaterTankViewModel(context: Context) : ViewModel() {
         )
     }
 
-    fun startListening() {
+    private fun startListening() {
         listenerConnectableObservable = mqttHelper.receiveMessages()
         listenerConnectableObservable.connect()
     }
 
-    private fun createPercentSubscriber() {
+    private fun createSubscribers() {
         disposeBag.add(
             listenerConnectableObservable
-                .filter { it.first == FROM_PERCENT_TOPIC }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        _waterTankUiState.value = _waterTankUiState.value.copy(
-                            percent = it.second.toInt()
-                        )
-                        isPercentsReady = true
+                        when (it.first) {
+                            FROM_PERCENT_TOPIC -> {
+                                _waterTankUiState.update { currentState ->
+                                    currentState.copy(
+                                        percent = it.second.toInt()
+                                    )
+                                }
+                                isPercentsReady = true
+                            }
+                            FROM_MODE_TOPIC -> {
+                                _waterTankUiState.update { currentState ->
+                                    currentState.copy(
+                                        mode = it.second.toInt(),
+                                        modeReady = true
+                                    )
+                                }
+                                isModeReady = true
+                            }
+                            FROM_PUMP_TOPIC -> {
+                                _waterTankUiState.update { currentState ->
+                                    currentState.copy(
+                                        isPumpOn = it.second == "true",
+                                        pumpReady = true
+                                    )
+                                }
+                                isPumpReady = true
+                            }
+                            FROM_TIME_TOPIC -> {
+                                _waterTankUiState.update { currentState ->
+                                    currentState.copy(
+                                        time = it.second.toInt()
+                                    )
+                                }
+                                isTimeReady = true
+                            }
+                        }
                         checkIsReady()
                     },
                     {
@@ -103,66 +133,8 @@ class WaterTankViewModel(context: Context) : ViewModel() {
         )
     }
 
-    private fun createModeSubscriber() {
-        disposeBag.add(
-            listenerConnectableObservable
-                .filter { it.first == FROM_MODE_TOPIC }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {
-                        _waterTankUiState.value = _waterTankUiState.value.copy(
-                            mode = it.second.toInt(),
-                            modeReady = true
-                        )
-                        isModeReady = true
-                        checkIsReady()
-                    },
-                    {
-                        /*TODO*/
-                    }
-                )
-        )
-    }
+    private fun makeRequests() {
 
-    private fun createPumpSubscriber() {
-        disposeBag.add(
-            listenerConnectableObservable
-                .filter { it.first == FROM_PUMP_TOPIC }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {
-                        _waterTankUiState.value = _waterTankUiState.value.copy(
-                            isPumpOn = it.second == "true",
-                            pumpReady = true
-                        )
-                        isPumpReady = true
-                        checkIsReady()
-                    },
-                    {
-                        /*TODO*/
-                    }
-                )
-        )
-    }
-
-    private fun createTimeSubscriber() {
-        disposeBag.add(
-            listenerConnectableObservable
-                .filter { it.first == FROM_TIME_TOPIC }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {
-                        _waterTankUiState.value = _waterTankUiState.value.copy(
-                            time = it.second.toInt()
-                        )
-                        isTimeReady = true
-                        checkIsReady()
-                    },
-                    {
-                        /*TODO*/
-                    }
-                )
-        )
     }
 
     private fun checkIsReady() {
