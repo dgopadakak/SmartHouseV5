@@ -1,6 +1,6 @@
 package com.dgopadakak.smarthousev5.ui.states
 
-data class WaterTankState(
+data class WaterTankUiState(
     val ready: Boolean = false,
     val modeReady: Boolean = true,
     val pumpReady: Boolean = true,

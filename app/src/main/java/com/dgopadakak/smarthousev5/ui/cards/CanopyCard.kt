@@ -22,10 +22,10 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.dgopadakak.smarthousev5.R
-import com.dgopadakak.smarthousev5.ui.states.CanopyState
+import com.dgopadakak.smarthousev5.ui.states.CanopyUiState
 
 @Composable
-fun CanopyCardLarge(canopyState: MutableState<CanopyState>) {
+fun CanopyCardLarge(canopyUiState: MutableState<CanopyUiState>) {
     Card(
         modifier = Modifier.padding(10.dp)
     ) {
@@ -35,15 +35,15 @@ fun CanopyCardLarge(canopyState: MutableState<CanopyState>) {
             Column {
                 for (i in 0 until 7) {
                     CanopyRow(
-                        isRenameButtonReady = canopyState.value.renameButtonReadyList[i],
-                        isSwitchReady = canopyState.value.switchReadyList[i],
-                        name = canopyState.value.nameList[i],
-                        isOn = canopyState.value.isOnList[i],
+                        isRenameButtonReady = canopyUiState.value.renameButtonReadyList[i],
+                        isSwitchReady = canopyUiState.value.switchReadyList[i],
+                        name = canopyUiState.value.nameList[i],
+                        isOn = canopyUiState.value.isOnList[i],
                         index = i
                     )
                 }
                 Button(
-                    enabled = canopyState.value.glAviaryReady,
+                    enabled = canopyUiState.value.glAviaryReady,
                     onClick = { /*TODO*/ },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -59,7 +59,7 @@ fun CanopyCardLarge(canopyState: MutableState<CanopyState>) {
 @Composable
 fun CanopyCardSmall(
     pinned: MutableState<Int>,
-    canopyState: MutableState<CanopyState>
+    canopyUiState: MutableState<CanopyUiState>
 ) {
     Card(
         modifier = Modifier.padding(10.dp)
@@ -84,17 +84,17 @@ fun CanopyCardSmall(
                 CanopyColumn(
                     startIndex = 0,
                     endIndex = 4,
-                    canopyState = canopyState
+                    canopyUiState = canopyUiState
                 )
                 CanopyColumn(
                     startIndex = 4,
                     endIndex = 7,
-                    canopyState = canopyState,
+                    canopyUiState = canopyUiState,
                     modifier = Modifier.padding(start = 20.dp)
                 )
             }
             Button(
-                enabled = canopyState.value.glAviaryReady,
+                enabled = canopyUiState.value.glAviaryReady,
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
                     .padding(end = 15.dp, bottom = 10.dp),
@@ -155,7 +155,7 @@ private fun CanopyRow(
 private fun CanopyColumn(
     startIndex: Int,
     endIndex: Int,
-    canopyState: MutableState<CanopyState>,
+    canopyUiState: MutableState<CanopyUiState>,
     modifier: Modifier = Modifier
 ) {
     val density = LocalDensity.current
@@ -166,8 +166,8 @@ private fun CanopyColumn(
             Row(
                 modifier = Modifier.padding(top = 5.dp)
             ) {
-                Text(text = "${canopyState.value.nameList[i]}: " +
-                        if (canopyState.value.isOnList[i]) "on" else "off",
+                Text(text = "${canopyUiState.value.nameList[i]}: " +
+                        if (canopyUiState.value.isOnList[i]) "on" else "off",
                     fontSize = with(density) { 14.dp.toSp() }
                 )
             }

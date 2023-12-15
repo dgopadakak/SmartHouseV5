@@ -1,6 +1,6 @@
 package com.dgopadakak.smarthousev5.ui.states
 
-data class CanopyState(
+data class CanopyUiState(
     val ready: Boolean = false,
     val glAviaryReady: Boolean = true,
     val renameButtonReadyList: List<Boolean> = listOf(true, true, true, true, true, true, true),

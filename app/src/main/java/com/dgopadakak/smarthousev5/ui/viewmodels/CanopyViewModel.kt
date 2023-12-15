@@ -1,4 +1,7 @@
 package com.dgopadakak.smarthousev5.ui.viewmodels
 
-class CanopyViewModel {
+import androidx.lifecycle.ViewModel
+
+class CanopyViewModel : ViewModel() {
+
 }
