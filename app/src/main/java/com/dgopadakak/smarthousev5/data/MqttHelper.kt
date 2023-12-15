@@ -13,13 +13,12 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions
 import org.eclipse.paho.client.mqttv3.MqttException
 import org.eclipse.paho.client.mqttv3.MqttMessage
 
-class MqttHelper(context: Context) {
+class MqttHelper(context: Context, private val topic: String) {
     companion object {
-        const val SERVER_URI = "ssl://7cc77ccf90ea4aff8def5615d31d2b34.s1.eu.hivemq.cloud:8883"
-        const val USERNAME = "dgopadakak"
-        const val PASSWD = "Ww12345678910"
+        const val SERVER_URI = "ssl://a71be432bdd2446aa7021c159691067d.s1.eu.hivemq.cloud:8883"
+        const val USERNAME = "sh_dgopadakak"
+        const val PASSWD = "Rp2T4eCx@_!"
         const val CLIENT_ID = "phone"
-        const val TOPIC = "from/#"
         const val QOS = 2
     }
 
@@ -53,7 +52,7 @@ class MqttHelper(context: Context) {
     fun subscribeTopic(): Completable {
         return Completable.create { subscriber ->
             try {
-                mqttAndroidClient.subscribe(TOPIC, QOS, null, object : IMqttActionListener {
+                mqttAndroidClient.subscribe(topic, QOS, null, object : IMqttActionListener {
                     override fun onSuccess(asyncActionToken: IMqttToken) {
                         subscriber.onComplete()
                     }
