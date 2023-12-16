@@ -9,4 +9,6 @@ data class WaterTankUiState(
     val mode: Int = 0,
     val time: Int = 0,
     val isPumpOn: Boolean = false,
+
+    val connectionStatus: String = "",
 )

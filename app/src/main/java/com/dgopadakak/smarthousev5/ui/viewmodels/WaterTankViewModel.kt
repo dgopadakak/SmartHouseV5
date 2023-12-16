@@ -20,10 +20,9 @@ class WaterTankViewModel(context: Context) : ViewModel() {
         const val FROM_MODE_TOPIC = "from/home/water/mode"
         const val FROM_PUMP_TOPIC = "from/home/water/pump"
         const val FROM_TIME_TOPIC = "from/home/water/time"
-        const val TO_PERCENT_TOPIC = "to/home/water/percent"        // to server from phone
-        const val TO_MODE_TOPIC = "to/home/water/mode"
+        const val TO_MODE_TOPIC = "to/home/water/mode"              // to server from phone
         const val TO_PUMP_TOPIC = "to/home/water/pump"
-        const val TO_TIME_TOPIC = "to/home/water/time"
+        const val TO_REQUEST_TOPIC = "to/home/water/request"
     }
 
     private val _waterTankUiState = MutableStateFlow(WaterTankUiState())
@@ -43,7 +42,12 @@ class WaterTankViewModel(context: Context) : ViewModel() {
     }
 
     private fun startConnection() {
-        _waterTankUiState.value = _waterTankUiState.value.copy(ready = false)
+        _waterTankUiState.update { currentState ->
+            currentState.copy(
+                ready = false,
+                connectionStatus = "Подключение..."
+            )
+        }
         disposeBag.add(
             mqttHelper.connect()
                 .observeOn(AndroidSchedulers.mainThread())
@@ -53,13 +57,16 @@ class WaterTankViewModel(context: Context) : ViewModel() {
                         startSubscription()
                     },
                     {
-                        /*TODO*/
+                        reconnect()
                     }
                 )
         )
     }
 
     private fun startSubscription() {
+        _waterTankUiState.update { currentState ->
+            currentState.copy(connectionStatus = "Подписка...")
+        }
         disposeBag.add(
             mqttHelper.subscribeTopic()
                 .observeOn(AndroidSchedulers.mainThread())
@@ -71,7 +78,7 @@ class WaterTankViewModel(context: Context) : ViewModel() {
                         makeRequests()
                     },
                     {
-                        /*TODO*/
+                        reconnect()
                     }
                 )
         )
@@ -83,6 +90,9 @@ class WaterTankViewModel(context: Context) : ViewModel() {
     }
 
     private fun createSubscribers() {
+        _waterTankUiState.update { currentState ->
+            currentState.copy(connectionStatus = "Создание слушателей...")
+        }
         disposeBag.add(
             listenerConnectableObservable
                 .observeOn(AndroidSchedulers.mainThread())
@@ -127,7 +137,7 @@ class WaterTankViewModel(context: Context) : ViewModel() {
                         checkIsReady()
                     },
                     {
-                        /*TODO*/
+                        reconnect()
                     }
                 )
         )
@@ -136,12 +146,23 @@ class WaterTankViewModel(context: Context) : ViewModel() {
     private fun checkIsReady() {
         if (isPercentsReady && isModeReady && isPumpReady && isTimeReady) {
             _waterTankUiState.update { currentState ->
-                currentState.copy(ready = true)
+                currentState.copy(
+                    ready = true,
+                    connectionStatus = ""
+                )
             }
         }
     }
 
     private fun makeRequests() {
+        _waterTankUiState.update { currentState ->
+            currentState.copy(connectionStatus = "Выполнение запросов...")
+        }
         TODO()
+    }
+
+    private fun reconnect() {
+        disposeBag.dispose()
+        startConnection()
     }
 }
