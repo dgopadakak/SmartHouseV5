@@ -33,7 +33,7 @@ import com.dgopadakak.smarthousev5.ui.theme.LightBlue
 import com.dgopadakak.smarthousev5.ui.theme.LightGray
 
 @Composable
-fun WaterTankCardLarge(waterTankUiState: MutableState<WaterTankUiState>) {
+fun WaterTankCardLarge(waterTankUiState: WaterTankUiState) {
     val density = LocalDensity.current
     Card(
         modifier = Modifier.padding(10.dp)
@@ -50,7 +50,7 @@ fun WaterTankCardLarge(waterTankUiState: MutableState<WaterTankUiState>) {
                         contentAlignment = Alignment.Center
                     ) {
                         GradientProgressIndicator(
-                            progress = 0.01f * waterTankUiState.value.percent,
+                            progress = 0.01f * waterTankUiState.percent,
                             gradientStart = LightBlue,
                             gradientEnd = Color.Blue,
                             trackColor = Color.Gray,
@@ -58,7 +58,7 @@ fun WaterTankCardLarge(waterTankUiState: MutableState<WaterTankUiState>) {
                             modifier = Modifier.size(160.dp)
                         )
                         Text(
-                            text = "${waterTankUiState.value.percent}%",
+                            text = "${waterTankUiState.percent}%",
                             modifier = Modifier.align(Alignment.Center),
                             fontSize = with(density) { 25.dp.toSp() }
                         )
@@ -68,13 +68,13 @@ fun WaterTankCardLarge(waterTankUiState: MutableState<WaterTankUiState>) {
                     ) {
                         Text(
                             text = "Насос ${
-                                if (waterTankUiState.value.isPumpOn)
+                                if (waterTankUiState.isPumpOn)
                                     "работает"
                                 else
                                     "работал"
                             }:"
                         )
-                        Text(text = "${waterTankUiState.value.time} мин.")
+                        Text(text = "${waterTankUiState.time} мин.")
                     }
                 }
 
@@ -95,8 +95,8 @@ fun WaterTankCardLarge(waterTankUiState: MutableState<WaterTankUiState>) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         RadioButton(
-                            enabled = waterTankUiState.value.modeReady,
-                            selected = waterTankUiState.value.mode == 0,
+                            enabled = waterTankUiState.modeReady,
+                            selected = waterTankUiState.mode == 0,
                             onClick = { /*TODO*/ },
                             modifier = Modifier
                                 .size(30.dp)
@@ -108,8 +108,8 @@ fun WaterTankCardLarge(waterTankUiState: MutableState<WaterTankUiState>) {
                             modifier = Modifier.padding(start = 6.dp)
                         )
                         RadioButton(
-                            enabled = waterTankUiState.value.modeReady,
-                            selected = waterTankUiState.value.mode == 1,
+                            enabled = waterTankUiState.modeReady,
+                            selected = waterTankUiState.mode == 1,
                             onClick = { /*TODO*/ },
                             modifier = Modifier
                                 .size(30.dp)
@@ -130,8 +130,8 @@ fun WaterTankCardLarge(waterTankUiState: MutableState<WaterTankUiState>) {
                             fontSize = with(density) { 14.dp.toSp() }
                         )
                         Switch(
-                            enabled = waterTankUiState.value.pumpReady,
-                            checked = waterTankUiState.value.isPumpOn,
+                            enabled = waterTankUiState.pumpReady,
+                            checked = waterTankUiState.isPumpOn,
                             onCheckedChange = {
                                 /*TODO*/
                             },
@@ -140,7 +140,7 @@ fun WaterTankCardLarge(waterTankUiState: MutableState<WaterTankUiState>) {
                     }
                 }
             }
-            if (!waterTankUiState.value.ready) {
+            if (!waterTankUiState.ready) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -164,7 +164,7 @@ fun WaterTankCardLarge(waterTankUiState: MutableState<WaterTankUiState>) {
 @Composable
 fun WaterTankCardSmall(
     pinned: MutableState<Int>,
-    waterTankUiState: MutableState<WaterTankUiState>
+    waterTankUiState: WaterTankUiState
 ) {
     val density = LocalDensity.current
     Card(
@@ -182,7 +182,7 @@ fun WaterTankCardSmall(
                         contentAlignment = Alignment.Center
                     ) {
                         GradientProgressIndicator(
-                            progress = 0.01f * waterTankUiState.value.percent,
+                            progress = 0.01f * waterTankUiState.percent,
                             gradientStart = LightBlue,
                             gradientEnd = Color.Blue,
                             trackColor = Color.Gray,
@@ -190,19 +190,19 @@ fun WaterTankCardSmall(
                             modifier = Modifier.size(45.dp)
                         )
                         Text(
-                            text = "${waterTankUiState.value.percent}%",
+                            text = "${waterTankUiState.percent}%",
                             modifier = Modifier.align(Alignment.Center),
                             fontSize = with(density) { 15.dp.toSp() }
                         )
                     }
                     Text(
                         text = "Насос ${
-                            if (waterTankUiState.value.isPumpOn)
+                            if (waterTankUiState.isPumpOn)
                                 "работает"
                             else
                                 "работал"
                         }: " +
-                                "${waterTankUiState.value.time} мин.",
+                                "${waterTankUiState.time} мин.",
                         fontSize = with(density) { 15.dp.toSp() },
                         modifier = Modifier.padding(top = 19.dp)
                     )
@@ -235,8 +235,8 @@ fun WaterTankCardSmall(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         RadioButton(
-                            enabled = waterTankUiState.value.modeReady,
-                            selected = waterTankUiState.value.mode == 0,
+                            enabled = waterTankUiState.modeReady,
+                            selected = waterTankUiState.mode == 0,
                             onClick = { /*TODO*/ },
                             modifier = Modifier
                                 .size(30.dp)
@@ -248,8 +248,8 @@ fun WaterTankCardSmall(
                             modifier = Modifier.padding(start = 6.dp)
                         )
                         RadioButton(
-                            enabled = waterTankUiState.value.modeReady,
-                            selected = waterTankUiState.value.mode == 1,
+                            enabled = waterTankUiState.modeReady,
+                            selected = waterTankUiState.mode == 1,
                             onClick = { /*TODO*/ },
                             modifier = Modifier
                                 .size(30.dp)
@@ -262,8 +262,8 @@ fun WaterTankCardSmall(
                         )
                     }
                     Switch(
-                        enabled = waterTankUiState.value.pumpReady,
-                        checked = waterTankUiState.value.isPumpOn,
+                        enabled = waterTankUiState.pumpReady,
+                        checked = waterTankUiState.isPumpOn,
                         onCheckedChange = {
                             /*TODO*/
                         },
@@ -271,7 +271,7 @@ fun WaterTankCardSmall(
                     )
                 }
             }
-            if (!waterTankUiState.value.ready) {
+            if (!waterTankUiState.ready) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()

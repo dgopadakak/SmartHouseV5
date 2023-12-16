@@ -16,10 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.dgopadakak.smarthousev5.R
-import com.dgopadakak.smarthousev5.ui.states.DishwasherUiState
 
 @Composable
-fun DishwasherCardLarge(dishwasherUiState: MutableState<DishwasherUiState>) {
+fun DishwasherCardLarge(/*dishwasherUiState: MutableState<DishwasherUiState>*/) {
     Card(
         modifier = Modifier.padding(10.dp)
     ) {
@@ -39,7 +38,7 @@ fun DishwasherCardLarge(dishwasherUiState: MutableState<DishwasherUiState>) {
 @Composable
 fun DishwasherCardSmall(
     pinned: MutableState<Int>,
-    dishwasherUiState: MutableState<DishwasherUiState>
+    /*dishwasherUiState: MutableState<DishwasherUiState>*/
 ) {
     Card(
         modifier = Modifier.padding(10.dp)

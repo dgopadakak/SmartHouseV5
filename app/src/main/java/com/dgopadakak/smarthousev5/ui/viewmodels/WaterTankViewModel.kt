@@ -15,14 +15,14 @@ import kotlinx.coroutines.flow.update
 
 class WaterTankViewModel(context: Context) : ViewModel() {
     companion object {
-        const val SUBSCRIBE_TOPIC = "from/home/water/#"
-        const val FROM_PERCENT_TOPIC = "from/home/water/percent"    // from server to phone
-        const val FROM_MODE_TOPIC = "from/home/water/mode"
-        const val FROM_PUMP_TOPIC = "from/home/water/pump"
-        const val FROM_TIME_TOPIC = "from/home/water/time"
-        const val TO_MODE_TOPIC = "to/home/water/mode"              // to server from phone
-        const val TO_PUMP_TOPIC = "to/home/water/pump"
-        const val TO_REQUEST_TOPIC = "to/home/water/request"
+        private const val SUBSCRIBE_TOPIC = "from/home/water/#"
+        private const val FROM_PERCENT_TOPIC = "from/home/water/percent"    // from server to phone
+        private const val FROM_MODE_TOPIC = "from/home/water/mode"
+        private const val FROM_PUMP_TOPIC = "from/home/water/pump"
+        private const val FROM_TIME_TOPIC = "from/home/water/time"
+        private const val TO_MODE_TOPIC = "to/home/water/mode"              // to server from phone
+        private const val TO_PUMP_TOPIC = "to/home/water/pump"
+        private const val TO_REQUEST_TOPIC = "to/home/water/request"
     }
 
     private val _waterTankUiState = MutableStateFlow(WaterTankUiState())
@@ -158,7 +158,12 @@ class WaterTankViewModel(context: Context) : ViewModel() {
         _waterTankUiState.update { currentState ->
             currentState.copy(connectionStatus = "Выполнение запросов...")
         }
-        TODO()
+        disposeBag.add(
+            mqttHelper.publishMessages(TO_REQUEST_TOPIC, "request")
+                .subscribeOn(Schedulers.newThread())
+                .doOnError { reconnect() }
+                .subscribe()
+        )
     }
 
     private fun reconnect() {
