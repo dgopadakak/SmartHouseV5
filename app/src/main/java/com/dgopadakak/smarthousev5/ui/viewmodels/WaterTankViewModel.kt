@@ -133,13 +133,15 @@ class WaterTankViewModel(context: Context) : ViewModel() {
         )
     }
 
-    private fun makeRequests() {
-
-    }
-
     private fun checkIsReady() {
         if (isPercentsReady && isModeReady && isPumpReady && isTimeReady) {
-            _waterTankUiState.value = _waterTankUiState.value.copy(ready = true)
+            _waterTankUiState.update { currentState ->
+                currentState.copy(ready = true)
+            }
         }
+    }
+
+    private fun makeRequests() {
+        TODO()
     }
 }
