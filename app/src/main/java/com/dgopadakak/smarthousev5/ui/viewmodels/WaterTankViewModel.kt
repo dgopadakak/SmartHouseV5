@@ -174,11 +174,8 @@ class WaterTankViewModel @Inject constructor(
         )
     }
 
-    /**
-     * TODO: переподключение после ошибки не работает. После disposeBag.dispose() надо что-то сделать с disposeBag, чтобы он заново заработал, если проблема в этом
-      */
     private fun reconnect() {
-        disposeBag.dispose()
+        disposeBag.clear()
         isPercentsReady = false
         isModeReady = false
         isPumpReady = false
