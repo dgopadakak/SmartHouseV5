@@ -22,10 +22,12 @@ class WaterTankViewModel @Inject constructor(
 ) : ViewModel() {
     companion object {
         private const val SUBSCRIBE_TOPIC = "from/home/water/#"
+
         private const val FROM_PERCENT_TOPIC = "from/home/water/percent"    // from server to phone
         private const val FROM_MODE_TOPIC = "from/home/water/mode"
         private const val FROM_PUMP_TOPIC = "from/home/water/pump"
         private const val FROM_TIME_TOPIC = "from/home/water/time"
+        
         private const val TO_MODE_TOPIC = "to/home/water/mode"              // to server from phone
         private const val TO_PUMP_TOPIC = "to/home/water/pump"
         private const val TO_REQUEST_TOPIC = "to/home/water/request"
@@ -172,6 +174,9 @@ class WaterTankViewModel @Inject constructor(
         )
     }
 
+    /**
+     * TODO: переподключение после ошибки не работает. После disposeBag.dispose() надо что-то сделать с disposeBag, чтобы он заново заработал, если проблема в этом
+      */
     private fun reconnect() {
         disposeBag.dispose()
         isPercentsReady = false
