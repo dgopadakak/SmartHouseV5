@@ -33,7 +33,10 @@ import com.dgopadakak.smarthousev5.ui.theme.LightBlue
 import com.dgopadakak.smarthousev5.ui.theme.LightGray
 
 @Composable
-fun WaterTankCardLarge(waterTankUiState: WaterTankUiState) {
+fun WaterTankCardLarge(
+    waterTankUiState: WaterTankUiState,
+    onModeChange: (mode: Int) -> Unit
+) {
     val density = LocalDensity.current
     Card(
         modifier = Modifier.padding(10.dp)
@@ -97,7 +100,7 @@ fun WaterTankCardLarge(waterTankUiState: WaterTankUiState) {
                         RadioButton(
                             enabled = waterTankUiState.modeReady,
                             selected = waterTankUiState.mode == 0,
-                            onClick = { /*TODO*/ },
+                            onClick = { onModeChange.invoke(0) },
                             modifier = Modifier
                                 .size(30.dp)
                                 .padding(start = 15.dp)
@@ -110,7 +113,7 @@ fun WaterTankCardLarge(waterTankUiState: WaterTankUiState) {
                         RadioButton(
                             enabled = waterTankUiState.modeReady,
                             selected = waterTankUiState.mode == 1,
-                            onClick = { /*TODO*/ },
+                            onClick = { onModeChange.invoke(1) },
                             modifier = Modifier
                                 .size(30.dp)
                                 .padding(start = 15.dp)

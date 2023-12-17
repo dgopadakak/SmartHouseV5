@@ -37,7 +37,12 @@ fun MainScreen(
 
     Column {
         when (pinned.intValue) {
-            0 -> WaterTankCardLarge(waterTankUiState = waterTankUiState)
+            0 -> WaterTankCardLarge(
+                waterTankUiState = waterTankUiState,
+                onModeChange = { mode ->
+                    waterTankViewModel.changeMode(mode)
+                }
+            )
             1 -> CanopyCardLarge(canopyUiState = canopyUiState)
             2 -> DishwasherCardLarge(/*dishwasherUiState = dishwasherUiState*/)
         }

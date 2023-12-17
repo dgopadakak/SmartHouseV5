@@ -182,4 +182,19 @@ class WaterTankViewModel @Inject constructor(
         isTimeReady = false
         startConnection()
     }
+
+    fun changeMode(mode: Int) {
+        if (mode != _waterTankUiState.value.mode) {
+            _waterTankUiState.update { currentState ->
+                currentState.copy(modeReady = false)
+            }
+
+            disposeBag.add(
+                mqttHelper.publishMessages(TO_MODE_TOPIC, "$mode")
+                    .subscribeOn(Schedulers.newThread())
+                    .doOnError { reconnect() }
+                    .subscribe()
+            )
+        }
+    }
 }
