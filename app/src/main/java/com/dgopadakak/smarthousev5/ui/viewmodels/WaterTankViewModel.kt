@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.dgopadakak.smarthousev5.data.MqttHelper
 import com.dgopadakak.smarthousev5.ui.states.WaterTankUiState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.observables.ConnectableObservable
@@ -12,8 +14,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import javax.inject.Inject
 
-class WaterTankViewModel(context: Context) : ViewModel() {
+@HiltViewModel
+class WaterTankViewModel @Inject constructor(
+    @ApplicationContext context: Context
+) : ViewModel() {
     companion object {
         private const val SUBSCRIBE_TOPIC = "from/home/water/#"
         private const val FROM_PERCENT_TOPIC = "from/home/water/percent"    // from server to phone
@@ -156,7 +162,7 @@ class WaterTankViewModel(context: Context) : ViewModel() {
 
     private fun makeRequests() {
         _waterTankUiState.update { currentState ->
-            currentState.copy(connectionStatus = "Выполнение запросов...")
+            currentState.copy(connectionStatus = "Выполнение запроса...")
         }
         disposeBag.add(
             mqttHelper.publishMessages(TO_REQUEST_TOPIC, "request")
@@ -168,6 +174,10 @@ class WaterTankViewModel(context: Context) : ViewModel() {
 
     private fun reconnect() {
         disposeBag.dispose()
+        isPercentsReady = false
+        isModeReady = false
+        isPumpReady = false
+        isTimeReady = false
         startConnection()
     }
 }

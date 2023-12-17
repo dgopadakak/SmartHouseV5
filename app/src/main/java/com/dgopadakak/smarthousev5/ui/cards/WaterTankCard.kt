@@ -148,13 +148,22 @@ fun WaterTankCardLarge(waterTankUiState: WaterTankUiState) {
                         .clickable(enabled = false, onClick = {}),  // Чтобы не кликалось насквозь
                     contentAlignment = Alignment.Center
                 ) {
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .width(64.dp)
-                        /*TODO: посмотреть цвета:
-                        *   color = MaterialTheme.colorScheme.secondary,
-                        *   trackColor = MaterialTheme.colorScheme.surfaceVariant*/
-                    )
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .width(64.dp)
+                            /*TODO: посмотреть цвета:
+                            *   color = MaterialTheme.colorScheme.secondary,
+                            *   trackColor = MaterialTheme.colorScheme.surfaceVariant*/
+                        )
+                        Text(
+                            text = waterTankUiState.connectionStatus,
+                            modifier = Modifier.padding(top = 35.dp),
+                            color = Color.White
+                        )
+                    }
                 }
             }
         }
@@ -279,13 +288,22 @@ fun WaterTankCardSmall(
                         .clickable(enabled = false, onClick = {}),  // Чтобы не кликалось насквозь
                     contentAlignment = Alignment.Center
                 ) {
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .width(40.dp)
-                        /*TODO: посмотреть цвета:
-                        *   color = MaterialTheme.colorScheme.secondary,
-                        *   trackColor = MaterialTheme.colorScheme.surfaceVariant*/
-                    )
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .width(40.dp)
+                            /*TODO: посмотреть цвета:
+                            *   color = MaterialTheme.colorScheme.secondary,
+                            *   trackColor = MaterialTheme.colorScheme.surfaceVariant*/
+                        )
+                        Text(
+                            text = waterTankUiState.connectionStatus,
+                            modifier = Modifier.padding(top = 5.dp),
+                            color = Color.White
+                        )
+                    }
                 }
             }
             IconButton(
