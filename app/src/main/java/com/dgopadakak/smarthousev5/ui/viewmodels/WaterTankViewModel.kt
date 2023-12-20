@@ -27,7 +27,7 @@ class WaterTankViewModel @Inject constructor(
         private const val FROM_MODE_TOPIC = "from/home/water/mode"
         private const val FROM_PUMP_TOPIC = "from/home/water/pump"
         private const val FROM_TIME_TOPIC = "from/home/water/time"
-        
+
         private const val TO_MODE_TOPIC = "to/home/water/mode"              // to server from phone
         private const val TO_PUMP_TOPIC = "to/home/water/pump"
         private const val TO_REQUEST_TOPIC = "to/home/water/request"
@@ -115,6 +115,7 @@ class WaterTankViewModel @Inject constructor(
                                 }
                                 isPercentsReady = true
                             }
+
                             FROM_MODE_TOPIC -> {
                                 _waterTankUiState.update { currentState ->
                                     currentState.copy(
@@ -124,6 +125,7 @@ class WaterTankViewModel @Inject constructor(
                                 }
                                 isModeReady = true
                             }
+
                             FROM_PUMP_TOPIC -> {
                                 _waterTankUiState.update { currentState ->
                                     currentState.copy(
@@ -133,6 +135,7 @@ class WaterTankViewModel @Inject constructor(
                                 }
                                 isPumpReady = true
                             }
+
                             FROM_TIME_TOPIC -> {
                                 _waterTankUiState.update { currentState ->
                                     currentState.copy(
@@ -191,6 +194,21 @@ class WaterTankViewModel @Inject constructor(
 
             disposeBag.add(
                 mqttHelper.publishMessages(TO_MODE_TOPIC, "$mode")
+                    .subscribeOn(Schedulers.newThread())
+                    .doOnError { reconnect() }
+                    .subscribe()
+            )
+        }
+    }
+
+    fun pumpCheckedChange(isOn: Boolean) {
+        if (isOn != _waterTankUiState.value.isPumpOn) {
+            _waterTankUiState.update { currentState ->
+                currentState.copy(pumpReady = false)
+            }
+
+            disposeBag.add(
+                mqttHelper.publishMessages(TO_PUMP_TOPIC, "$isOn")
                     .subscribeOn(Schedulers.newThread())
                     .doOnError { reconnect() }
                     .subscribe()

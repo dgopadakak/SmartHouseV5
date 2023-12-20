@@ -35,7 +35,8 @@ import com.dgopadakak.smarthousev5.ui.theme.LightGray
 @Composable
 fun WaterTankCardLarge(
     waterTankUiState: WaterTankUiState,
-    onModeChange: (mode: Int) -> Unit
+    onModeChange: (mode: Int) -> Unit,
+    onPumpCheckedChange: (isOn: Boolean) -> Unit
 ) {
     val density = LocalDensity.current
     Card(
@@ -135,9 +136,7 @@ fun WaterTankCardLarge(
                         Switch(
                             enabled = waterTankUiState.pumpReady,
                             checked = waterTankUiState.isPumpOn,
-                            onCheckedChange = {
-                                /*TODO*/
-                            },
+                            onCheckedChange = { onPumpCheckedChange.invoke(it) },
                             modifier = Modifier.padding(start = 10.dp)
                         )
                     }
@@ -177,7 +176,8 @@ fun WaterTankCardLarge(
 fun WaterTankCardSmall(
     pinned: MutableState<Int>,
     waterTankUiState: WaterTankUiState,
-    onModeChange: (mode: Int) -> Unit
+    onModeChange: (mode: Int) -> Unit,
+    onPumpCheckedChange: (isOn: Boolean) -> Unit
 ) {
     val density = LocalDensity.current
     Card(
@@ -277,9 +277,7 @@ fun WaterTankCardSmall(
                     Switch(
                         enabled = waterTankUiState.pumpReady,
                         checked = waterTankUiState.isPumpOn,
-                        onCheckedChange = {
-                            /*TODO*/
-                        },
+                        onCheckedChange = { onPumpCheckedChange.invoke(it) },
                         modifier = Modifier.padding(start = 29.dp, end = 15.dp)
                     )
                 }
