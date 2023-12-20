@@ -176,7 +176,8 @@ fun WaterTankCardLarge(
 @Composable
 fun WaterTankCardSmall(
     pinned: MutableState<Int>,
-    waterTankUiState: WaterTankUiState
+    waterTankUiState: WaterTankUiState,
+    onModeChange: (mode: Int) -> Unit
 ) {
     val density = LocalDensity.current
     Card(
@@ -249,7 +250,7 @@ fun WaterTankCardSmall(
                         RadioButton(
                             enabled = waterTankUiState.modeReady,
                             selected = waterTankUiState.mode == 0,
-                            onClick = { /*TODO*/ },
+                            onClick = { onModeChange.invoke(0) },
                             modifier = Modifier
                                 .size(30.dp)
                                 .padding(start = 15.dp)
@@ -262,7 +263,7 @@ fun WaterTankCardSmall(
                         RadioButton(
                             enabled = waterTankUiState.modeReady,
                             selected = waterTankUiState.mode == 1,
-                            onClick = { /*TODO*/ },
+                            onClick = { onModeChange.invoke(1) },
                             modifier = Modifier
                                 .size(30.dp)
                                 .padding(start = 15.dp)

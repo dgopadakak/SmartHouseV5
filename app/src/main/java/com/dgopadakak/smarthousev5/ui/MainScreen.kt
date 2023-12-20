@@ -39,9 +39,7 @@ fun MainScreen(
         when (pinned.intValue) {
             0 -> WaterTankCardLarge(
                 waterTankUiState = waterTankUiState,
-                onModeChange = { mode ->
-                    waterTankViewModel.changeMode(mode)
-                }
+                onModeChange = { mode -> waterTankViewModel.changeMode(mode) }
             )
             1 -> CanopyCardLarge(canopyUiState = canopyUiState)
             2 -> DishwasherCardLarge(/*dishwasherUiState = dishwasherUiState*/)
@@ -58,12 +56,20 @@ fun MainScreen(
                 }
 
                 1 -> {
-                    WaterTankCardSmall(pinned = pinned, waterTankUiState = waterTankUiState)
+                    WaterTankCardSmall(
+                        pinned = pinned,
+                        waterTankUiState = waterTankUiState,
+                        onModeChange = { mode -> waterTankViewModel.changeMode(mode) }
+                    )
                     DishwasherCardSmall(pinned = pinned/*, dishwasherUiState = dishwasherUiState*/)
                 }
 
                 2 -> {
-                    WaterTankCardSmall(pinned = pinned, waterTankUiState = waterTankUiState)
+                    WaterTankCardSmall(
+                        pinned = pinned,
+                        waterTankUiState = waterTankUiState,
+                        onModeChange = { mode -> waterTankViewModel.changeMode(mode) }
+                    )
                     CanopyCardSmall(pinned = pinned, canopyUiState = canopyUiState)
                 }
             }
