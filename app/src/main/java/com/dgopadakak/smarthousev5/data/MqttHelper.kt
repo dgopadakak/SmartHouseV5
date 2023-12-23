@@ -112,4 +112,10 @@ class MqttHelper(context: Context, private val topic: String) {
     fun disconnect() {
         mqttAndroidClient.disconnect()
     }
+
+    fun isConnectedDataSource(): Observable<Boolean> {
+        return Observable.create { subscriber ->
+            /* TODO */
+        }
+    }
 }
