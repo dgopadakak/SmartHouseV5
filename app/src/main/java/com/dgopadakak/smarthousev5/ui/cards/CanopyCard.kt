@@ -1,9 +1,12 @@
 package com.dgopadakak.smarthousev5.ui.cards
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -23,6 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.dgopadakak.smarthousev5.R
 import com.dgopadakak.smarthousev5.ui.states.CanopyUiState
+import com.dgopadakak.smarthousev5.ui.theme.LightGray
 
 @Composable
 fun CanopyCardLarge(canopyUiState: MutableState<CanopyUiState>) {
@@ -30,7 +34,9 @@ fun CanopyCardLarge(canopyUiState: MutableState<CanopyUiState>) {
         modifier = Modifier.padding(10.dp)
     ) {
         Box(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(450.dp)
         ) {
             Column {
                 for (i in 0 until 7) {
@@ -52,6 +58,15 @@ fun CanopyCardLarge(canopyUiState: MutableState<CanopyUiState>) {
                     Text(text = "Основной свет")
                 }
             }
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(LightGray)
+                    .clickable(enabled = false, onClick = {}),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = "Coming soon...")
+            }
         }
     }
 }
@@ -69,15 +84,6 @@ fun CanopyCardSmall(
                 .width(300.dp)
                 .height(140.dp)
         ) {
-            IconButton(
-                onClick = { pinned.value = 1 },
-                modifier = Modifier.align(Alignment.TopEnd)
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_add_circle_outline_24),
-                    contentDescription = "Add button"
-                )
-            }
             Row(
                 modifier = Modifier.padding(start = 15.dp, top = 10.dp)
             ) {
@@ -101,6 +107,26 @@ fun CanopyCardSmall(
                 onClick = { /*TODO*/ }
             ) {
                 Text(text = "Свет")
+            }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(LightGray)
+                    .clickable(enabled = false, onClick = {}),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = "Coming soon...")
+            }
+
+            IconButton(
+                onClick = { pinned.value = 1 },
+                modifier = Modifier.align(Alignment.TopEnd)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_add_circle_outline_24),
+                    contentDescription = "Add button"
+                )
             }
         }
     }
