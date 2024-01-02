@@ -65,9 +65,11 @@ dependencies {
     implementation("io.reactivex.rxjava3:rxjava:3.1.7")
     implementation("io.reactivex.rxjava3:rxandroid:3.0.2")
 
-    implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0")
-    implementation("org.eclipse.paho:org.eclipse.paho.android.service:1.1.1")
-    implementation("androidx.localbroadcastmanager:localbroadcastmanager:1.1.0")
+//    implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0")
+//    implementation("org.eclipse.paho:org.eclipse.paho.android.service:1.1.1")
+//    implementation("androidx.localbroadcastmanager:localbroadcastmanager:1.1.0")
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("com.github.hannesa2:paho.mqtt.android:4.2")
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
 
