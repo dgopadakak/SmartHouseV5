@@ -13,17 +13,16 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions
 import org.eclipse.paho.client.mqttv3.MqttException
 import org.eclipse.paho.client.mqttv3.MqttMessage
 
-class MqttHelper(context: Context, private val topic: String) {
+class MqttHelper(context: Context, private val topic: String, clientId: String) {
     companion object {
         const val SERVER_URI = "ssl://a71be432bdd2446aa7021c159691067d.s1.eu.hivemq.cloud:8883"
         const val USERNAME = "sh_dgopadakak"
         const val PASSWD = "Rp2T4eCx@_!"
-        const val CLIENT_ID = "phone"
         const val QOS = 2
     }
 
     private var mqttAndroidClient: MqttAndroidClient = MqttAndroidClient(
-        context, SERVER_URI, CLIENT_ID
+        context, SERVER_URI, clientId
     )
 
     fun connect(): Completable {

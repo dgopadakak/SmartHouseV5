@@ -36,7 +36,11 @@ class WaterTankViewModel @Inject constructor(
     private val _waterTankUiState = MutableStateFlow(WaterTankUiState())
     val waterTankUiState: StateFlow<WaterTankUiState> = _waterTankUiState.asStateFlow()
 
-    private val mqttHelper = MqttHelper(context = context, topic = SUBSCRIBE_TOPIC)
+    private val mqttHelper = MqttHelper(
+        context = context,
+        topic = SUBSCRIBE_TOPIC,
+        clientId = "phone_${getRandomString(4)}"
+    )
     private lateinit var listenerConnectableObservable: ConnectableObservable<Pair<String, String>>
     private val disposeBag = CompositeDisposable()
 
@@ -214,5 +218,12 @@ class WaterTankViewModel @Inject constructor(
                     .subscribe()
             )
         }
+    }
+
+    fun getRandomString(length: Int) : String {
+        val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
+        return (1..length)
+            .map { allowedChars.random() }
+            .joinToString("")
     }
 }
